@@ -16,19 +16,21 @@
       <th>Book Cover</th>
    </tr>
    <?php 
+      $i = 0;
       foreach ($bookList as $book) {
    ?>  
          <tr>
             <td>
-               <a href="index.php?title=<?= $book->title ?>">
                   <?= $book->title ?>
-               </a>
             </td>
             <td>
+               <a href="index.php?id=<?= $i ?>">
                   <img src="<?= $book->image ?>" width="100" height="100">
+               </a>
             </td>
          </tr>
    <?php
+      $i++;
       }
    ?>
 </table>
