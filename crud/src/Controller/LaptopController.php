@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/')]
+#[Route('/laptop')]
 class LaptopController extends AbstractController
 {
     #[Route('/', name: 'app_laptop_index', methods: ['GET'])]
