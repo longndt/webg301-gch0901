@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Test 2</title>
+</head>
+<body>
+   {# Nhận dữ liệu từ controller (back-end) #}
+   <img src="{{ car }}" width="50%" height="50%" />
+   <h2>School : {{ s }}</h2>
+   <h2>Year : {{ y }}</h2>
+   <h2>Mobile : {{ m }}</h2>
+   <h2>Sports : </h2>
+   {% for sport in sports %}
+      <i> {{ sport }} </i> <br>
+   {% endfor %}
+</body>
+</html>
