@@ -52,7 +52,7 @@ class BlogController extends AbstractController
         }        
     }
 
-    #[Route('/blog/{id}', methods: 'DELETE', name: 'delete_blog')]
+    #[Route('/blog/delete/{id}', methods: 'DELETE', name: 'delete_blog')]
     public function deleteBlog ($id) {
         try {
             //DELETE FROM Blog WHERE id = '$id'
@@ -75,7 +75,7 @@ class BlogController extends AbstractController
         }
     }
 
-    #[Route('/blog', methods: 'POST', name: 'add_new_blog')]
+    #[Route('/blog/add', methods: 'POST', name: 'add_new_blog')]
     public function addBlog (Request $request) {
         try {
             //tạo mới 1 object blog
@@ -99,9 +99,34 @@ class BlogController extends AbstractController
         }
     }
 
-    #[Route('/blog/{id}', methods: 'PUT', name: 'update_blog')]
+    #[Route('/blog/update/{id}', methods: 'PUT', name: 'update_blog')]
     public function updateBlog ($id, Request $request) {
-        //gọi object blog lấy từ DB theo id
-        $blog = $this->getDoctrine()->getRepository(Blog::class)->find($id);
+        try{
+            //gọi object blog lấy từ DB theo id
+            $blog = $this->getDoctrine()->getRepository(Blog::class)->find($id);
+            //TH1: id không tồn tại
+            if ($blog == null) {
+                return new Response("Blog not found");
+            }
+            //TH2: id có tồn tại
+            else {
+                //khai báo biến $data để lấy dữ liệu nhập vào
+                $data = json_decode($request->getContent(), true);
+                //set các trường dữ liệu cho object blog
+                $blog->setAuthor($data['author']);
+                $blog->setTitle($data['title']);
+                $blog->setContent($data['content']);
+                $blog->setDate(\DateTime::createFromFormat('Y-m-d', $data['date']));
+                //gọi đến manager để đẩy dữ liệu của object vào database
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($blog);
+                $manager->flush();
+                return new Response("Update blog succeed !", Response::HTTP_ACCEPTED);
+            }
+        }
+        catch (\Exception $e) {
+            $error = $e->getMessage();
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        }
     }
 }
