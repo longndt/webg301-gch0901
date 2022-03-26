@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blog;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -72,5 +73,35 @@ class BlogController extends AbstractController
             $error = $e->getMessage();
             return new Response($error, Response::HTTP_BAD_REQUEST);
         }
+    }
+
+    #[Route('/blog', methods: 'POST', name: 'add_new_blog')]
+    public function addBlog (Request $request) {
+        try {
+            //tạo mới 1 object blog
+            $blog = new Blog;
+            //khai báo biến $data để lấy dữ liệu nhập vào
+            $data = json_decode($request->getContent(),true);
+            //set các trường dữ liệu cho object blog
+            $blog->setAuthor($data['author']);
+            $blog->setTitle($data['title']);
+            $blog->setContent($data['content']);
+            $blog->setDate(\DateTime::createFromFormat('Y-m-d',$data['date']));
+            //gọi đến manager để đẩy dữ liệu của object vào database
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($blog);
+            $manager->flush();
+            return new Response("Add blog succeed !", Response::HTTP_CREATED);
+        }
+        catch (\Exception $e) {
+            $error = $e->getMessage();
+            return new Response($error, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/blog/{id}', methods: 'PUT', name: 'update_blog')]
+    public function updateBlog ($id, Request $request) {
+        //gọi object blog lấy từ DB theo id
+        $blog = $this->getDoctrine()->getRepository(Blog::class)->find($id);
     }
 }
