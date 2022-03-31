@@ -75,7 +75,8 @@ class NoteController extends AbstractController
             return $this->redirectToRoute('note_index');
         }
         //render ra form để nhập liệu
-        //Note: nếu dùng renderForm() thì không có createView()
+        /*Note: nếu dùng renderForm() thì không có createView() => recommend
+                nếu dùng render() thì phải có createView() */
         return $this->renderForm('note/add.html.twig',
                                 [
                                     'noteForm' => $form
