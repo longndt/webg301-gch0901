@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+   <h1> Add new note succeed ! </h1>
+   <h2> Title : {{ note.title }} </h2>
+   <h2> Content : {{ note.content }} </h2>
+   <h2> Date : {{ note.date | date('d/m/Y')}} <h2>
+{% endblock %}
