@@ -1,0 +1,15 @@
+{# format form tự động bằng bootstrap layout #}
+{% form_theme noteForm 'bootstrap_5_layout.html.twig' %}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-8 text-center mt-3">
+   {# cách 1: ngắn gọn #}
+   {# {{ form (noteForm) }}  #}
+
+   {# cách 2: đầy đủ hơn #}
+   {{ form_start (noteForm) }}
+   {{ form_end (noteForm) }}
+</div>
+{% endblock %}

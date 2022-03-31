@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Note;
+use App\Form\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -59,4 +60,25 @@ class NoteController extends AbstractController
     }
 
     //Cách 2: tạo file form riêng và gọi ra ở controller (recommend)
+    #[Route('/add', name: 'note_add')]
+    public function noteAdd (Request $request) {
+        $note = new Note;
+        //tạo form từ file form NoteType, dữ liệu được lưu vào $note
+        $form = $this->createForm(NoteType::class, $note);
+        //handle request của form
+        $form->handleRequest($request);
+        //check xem form đã submit hay chưa và có hợp lệ hay không
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($note);
+            $manager->flush();
+            return $this->redirectToRoute('note_index');
+        }
+        //render ra form để nhập liệu
+        //Note: nếu dùng renderForm() thì không có createView()
+        return $this->renderForm('note/add.html.twig',
+                                [
+                                    'noteForm' => $form
+                                ]);   
+    }
 }
