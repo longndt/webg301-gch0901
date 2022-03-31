@@ -1,0 +1,25 @@
+{% extends "template.html.twig" %}
+
+{% block body %}
+<div class="container col-md-8 text-center mt-4">
+   <table class="table table-secondary">
+      <tr>
+         <th>Mobile ID</th>
+         <th>Mobile Name</th>
+         <th>Mobile Price</th>
+         <th>Mobile Image</th>
+      </tr>
+      {% for mobile in mobiles %}
+          <tr>
+            <td>{{ mobile.id }}</td>
+            <td>{{ mobile.name }}</td>
+            <td>{{ mobile.price }} $</td>
+            <td>
+               <img src="{{ mobile.image }}" 
+               width="100" height="100">
+            </td>
+          </tr>
+      {% endfor %} 
+   </table>
+</div>
+{% endblock %}
