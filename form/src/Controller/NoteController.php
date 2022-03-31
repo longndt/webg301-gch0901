@@ -45,11 +45,11 @@ class NoteController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($note);
             $manager->flush();
-            //return $this->redirectToRoute('note_index');
-            return $this->render('note/success.html.twig',
-                                [
-                                    'note' => $note
-                                ]);
+            return $this->redirectToRoute('note_index');
+            // return $this->render('note/success.html.twig',
+            //                     [
+            //                         'note' => $note
+            //                     ]);
         }
         //render ra form để nhập liệu
         return $this->render('note/new.html.twig',
