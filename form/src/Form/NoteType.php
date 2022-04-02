@@ -15,10 +15,24 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                ->add('title', TextType::class)
-                ->add('content', TextType::class)
+                ->add('title', TextType::class,
+                [
+                    'label' => 'Note Title',
+                    'required' => true,
+                    'attr' => [
+                        'minlength' => 3,
+                        'maxlength' => 30
+                    ]
+                ])
+                ->add('content', TextType::class,
+                [
+                    'label' => 'Note Content',
+                    'required' => true
+                ])
                 ->add('date', DateType::class,
                 [
+                    'label' => 'Note Due Date',
+                    'required' => true,
                     'widget' => 'single_text'
                 ])
                 ->add('Save', SubmitType::class)

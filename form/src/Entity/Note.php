@@ -16,7 +16,7 @@ class Note
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $content;
 
     #[ORM\Column(type: 'date')]
