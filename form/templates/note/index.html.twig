@@ -2,12 +2,15 @@
 
 {% block body %}
 <div class="container col-md-8 text-center mt-3">
+    <h2 class="text text-danger"> Note List </h2>
+    <a class="btn btn-secondary mb-3" href="{{ path('note_add')}}">ADD</a>
     <table class="table table-danger">
         <tr>
             <th>Note Id</th>
             <th>Note Title</th>
             <th>Note Content</th>
             <th>Note Deadline</th>
+            <th>Edit</th>
         </tr>
         {% for note in notes %}
             <tr>
@@ -15,6 +18,9 @@
                 <td>{{ note.title }}</td>
                 <td>{{ note.content }}</td>
                 <td>{{ note.date | date('d/m/Y') }}</td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('note_edit', {'id': note.id}) }}">EDIT</a>
+                </td>
             </tr>
         {% endfor %}  
     </table>
