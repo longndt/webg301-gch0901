@@ -1,0 +1,9 @@
+{% form_theme noteForm 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-6 mt-3 text-center">
+   <h3 class="text text-primary"> Edit note </h3>
+   {{ form (noteForm) }}
+</div>
+{% endblock %}

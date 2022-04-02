@@ -5,11 +5,13 @@
 
 {% block body %}
 <div class="container col-md-5 text-center mt-3">
+   <h3 class="text text-primary">Add new note </h3>
    {# cách 1: ngắn gọn #}
    {# {{ form (noteForm) }}  #}
 
    {# cách 2: đầy đủ hơn #}
    {{ form_start (noteForm) }}
    {{ form_end (noteForm) }}
+   
 </div>
 {% endblock %}

@@ -82,4 +82,24 @@ class NoteController extends AbstractController
                                     'noteForm' => $form
                                 ]);   
     }
+
+    #[Route('/edit/{id}', name: 'note_edit')]
+    public function noteEdit (Request $request, $id) {
+        //khởi tạo object $note lấy dữ liệu theo id từ database
+        $note = $this->getDoctrine()->getRepository(Note::class)->find($id);
+        //khởi tạo object $form theo file form độc lập
+        $form = $this->createForm(NoteType::class,$note);
+        //handle request trong form
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($form);
+            $manager->flush();
+            return $this->redirectToRoute("note_index");
+        }
+        return $this->renderForm("note/edit.html.twig",
+                                [
+                                   'noteForm' => $form 
+                                ]);
+    }
 }

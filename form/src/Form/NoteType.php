@@ -21,7 +21,7 @@ class NoteType extends AbstractType
                 [
                     'widget' => 'single_text'
                 ])
-                ->add('Add', SubmitType::class)
+                ->add('Save', SubmitType::class)
                 ;       
     }
 
