@@ -93,7 +93,7 @@ class NoteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
-            $manager->persist($form);
+            $manager->persist($note);
             $manager->flush();
             return $this->redirectToRoute("note_index");
         }
