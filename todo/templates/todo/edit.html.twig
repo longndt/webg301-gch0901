@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container col-md-7 text-center">
+   <h2 class="text text-danger text-uppercase"> Edit todo </h2>
+   {{ form_start (todoForm)}}
+   <div class="form-group">
+      <label for="name" class="text-primary">Todo Title</label>
+      {{ form_widget (todoForm.name, {
+         'attr' : {
+            'class' : 'form-control',
+            'placeholder' : 'Enter title here'
+         }
+      })}}
+   </div>
+   <div class="form-group">
+      <label for="description" class="text-primary">Todo Description</label>
+      {{ form_widget (todoForm.description, {
+         'attr' : {
+            'class' : 'form-control',
+            'placeholder' : 'Enter description here'
+         }
+      })}}
+   </div>
+   <div class="form-group">
+      <label for="category" class="text-primary">Todo Category</label>
+      {{ form_widget (todoForm.category, {
+         'attr' : {
+            'class' : 'form-control'
+         }
+      })}}
+   </div>
+   <div class="form-group">
+      <label for="priority" class="text-primary">Todo Priority</label>
+      {{ form_widget (todoForm.priority, {
+         'attr' : {
+            'class' : 'form-control'
+         }
+      })}}
+   </div>
+   <div class="form-group">
+      <label for="duedate" class="text-primary">Todo DueDate</label>
+      {{ form_widget (todoForm.due_date, {
+         'attr' : {
+            'class' : 'form-control'
+         }
+      })}}
+   </div>
+   <input class="btn btn-primary" type="submit" value="Edit">
+   {{ form_end (todoForm)}}
+</div>
+{% endblock %}
