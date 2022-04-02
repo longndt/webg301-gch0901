@@ -37,6 +37,7 @@ class TodoType extends AbstractType
                     'Study' => 'Study',
                     'Family' => 'Family',
                 ]
+                //default: drop-down list
             ])
             ->add('priority', ChoiceType::class,
             [
@@ -46,7 +47,8 @@ class TodoType extends AbstractType
                     '3' => '3',
                     '4' => '4',
                     '5' => '5'
-                ]
+                ],
+                //'expanded' => true //radio button
             ])
             ->add('due_date', DateType::class,
             [
