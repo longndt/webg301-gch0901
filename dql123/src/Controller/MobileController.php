@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Mobile;
+use App\Form\MobileType;
 use App\Repository\MobileRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -71,6 +72,24 @@ class MobileController extends AbstractController
          return $this->render('mobile/index.html.twig',
                                 [
                                     'mobiles' => $mobiles
+                                ]);
+     }
+
+     #[Route('/add', name: 'mobile_add')]
+     public function addMobile (Request $request, ManagerRegistry $doctrine) {
+         $mobile = new Mobile;
+         $form = $this->createForm(MobileType::class,$mobile);
+         $form->handleRequest($request);
+         if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $doctrine->getManager();
+            $manager->persist($mobile);
+            $manager->flush();
+            $this->addFlash("Success","Add new mobile succeed !");
+            return $this->redirectToRoute('mobile_desc');
+         }
+         return $this->renderForm('mobile/add.html.twig',
+                                [
+                                    'mobileForm' => $form
                                 ]);
      }
 }

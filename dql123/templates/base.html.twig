@@ -15,6 +15,12 @@
         {% endblock %}
     </head>
     <body>
+        {% block nav %}
+            <nav class="nav justify-content-center">
+              <h3><a class="nav-link" href="{{ path('mobile_index')}}">Mobile List</a></h3>
+              <h3><a class="nav-link" href="{{ path('mobile_add')}} ">Add mobile</a></h3>
+            </nav>
+        {% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>

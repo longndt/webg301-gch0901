@@ -1,0 +1,9 @@
+{% form_theme mobileForm 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container col-md-8 text-center mt-4">
+  <h1 class="text text-danger"> Add mobile </h1>
+   {{ form_start (mobileForm) }}
+   {{ form_end (mobileForm) }}
+</div>
+{% endblock %}
