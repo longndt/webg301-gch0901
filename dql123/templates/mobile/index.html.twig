@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container col-md-8 text-center">
+<h1 class="text text-danger"> Mobile List </h1>
+<table class="table table-primary">
+    <tr class="text text-secondary">
+        <th>Mobile ID</th>
+        <th>Mobile Name</th>
+        <th>Mobile Quantity</th>
+        <th>Mobile Price</th>
+        <th>Mobile Image</th>
+        <th>Delete</th>
+    </tr>
+    {% for m in mobiles %}
+        <tr class="text text-info">
+            <td>{{ m.id }}</td>
+            <td>{{ m.name }}</td>
+            <td>{{ m.quantity }}</td>
+            <td>{{ m.price }} $</td>
+            <td>
+                <img src="{{ m.image }}" width="100" height="100">
+            </td>
+            <th>
+            <a class="btn btn-danger" href="{{path('mobile_delete',{'id' : m.id })}}"
+            onclick="return confirm('Are you sure to delete this mobile ?')">
+            DELETE
+            </a>
+            </th>
+        </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}
