@@ -1,18 +1,35 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<div class="container col-md-8 text-center">
+<div class="container col-md-10 text-center">
 <h1 class="text text-danger"> Mobile List </h1>
 <table class="table table-primary">
     <tr class="text text-secondary">
-        <th>Mobile ID</th>
+        <th>Mobile ID
+            <a class="text-decoration-none" href="{{ path('mobile_index')}}">
+                <img src="{{ asset('images/up.jpg') }}" width="20" height="20">
+            </a>
+             <a class="text-decoration-none" href="{{ path('mobile_desc')}}">
+                <img src="{{ asset('images/down.jpg') }}" width="20" height="20">
+            </a>
+        </th>
         <th>Mobile Name</th>
-        <th>Mobile Quantity</th>
+        <th>Mobile Quantity
+            <select onchange="window.location.href=this.value">
+                <option> Sort </option>
+                <option value="{{ path('quantity_asc')}}">
+                       Ascending
+                </option>
+                <option value="{{ path('quantity_desc')}}">
+                       Descending
+                </option>
+            </select>
+        </th>
         <th>Mobile Price</th>
         <th>Mobile Image</th>
         <th>Delete</th>
     </tr>
     {% for m in mobiles %}
-        <tr class="text text-info">
+        <tr class="text text-danger">
             <td>{{ m.id }}</td>
             <td>{{ m.name }}</td>
             <td>{{ m.quantity }}</td>

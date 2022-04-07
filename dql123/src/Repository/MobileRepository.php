@@ -46,14 +46,38 @@ class MobileRepository extends ServiceEntityRepository
     }
 
     /**
-      * @return Mobile[]  
+    * @return Mobile[]  
     */
-    public function sort ()
+    public function sortId ()
     {
         // SQL: SELECT * FROM Mobile ORDER BY id DESC
         // DQL: Doctrine Query Language
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+     /**
+    * @return Mobile[]  
+    */
+    public function sortQuantityAsc ()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.quantity', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+     /**
+    * @return Mobile[]  
+    */
+    public function sortQuantityDesc ()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.quantity', 'DESC')
             ->getQuery()
             ->getResult()
         ;
