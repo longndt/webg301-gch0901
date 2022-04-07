@@ -83,4 +83,21 @@ class MobileRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Mobile[]
+     */
+    //relative search : tìm kiếm tương đối (LIKE, %)
+    //absolute search : tìm kiếm tuyệt đối (=)
+    public function searchByName ($keyword)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('m.name', 'ASC') //optional
+            ->setMaxResults(3) //optional
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

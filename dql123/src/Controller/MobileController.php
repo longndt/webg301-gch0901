@@ -57,4 +57,13 @@ class MobileController extends AbstractController
                                     'mobiles' => $mobiles
                                 ]);
      }
+
+     #[Route('/search/{name}', name: 'mobile_search')]
+     public function searchMobile (MobileRepository $mobileRepository, $name) {
+         $mobiles = $mobileRepository->searchByName($name);
+         return $this->render('mobile/index.html.twig',
+                                [
+                                    'mobiles' => $mobiles
+                                ]);
+     }
 }
