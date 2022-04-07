@@ -6,6 +6,7 @@ use App\Entity\Mobile;
 use App\Repository\MobileRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,6 +38,7 @@ class MobileController extends AbstractController
         $manager = $doctrine->getManager();
         $manager->remove($mobile);
         $manager->flush();
+        $this->addFlash('Success','Delete mobile succeed !');
         return $this->redirectToRoute('mobile_desc');
      }
 
@@ -58,9 +60,14 @@ class MobileController extends AbstractController
                                 ]);
      }
 
-     #[Route('/search/{name}', name: 'mobile_search')]
-     public function searchMobile (MobileRepository $mobileRepository, $name) {
+     #[Route('/search', name: 'mobile_search')]
+     public function searchMobile (MobileRepository $mobileRepository, Request $request) {
+         $name = $request->get('keyword');
          $mobiles = $mobileRepository->searchByName($name);
+         //nếu kết quả tìm kiếm rỗng thì đẩy thông báo lỗi về view
+         if ($mobiles == null) {
+            $this->addFlash('Error','Mobile not found !');
+         }
          return $this->render('mobile/index.html.twig',
                                 [
                                     'mobiles' => $mobiles
