@@ -45,22 +45,18 @@ class LaptopRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Laptop[] Returns an array of Laptop objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Laptop[] Returns an array of Laptop objects
+      */
+    public function viewAllLaptop()
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('l.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+ 
 
     /*
     public function findOneBySomeField($value): ?Laptop
