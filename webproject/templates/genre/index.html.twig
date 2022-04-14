@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GenreController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/workspace/webg301-gch0901/webproject/src/Controller/GenreController.php'|file_link(0) }}">src/Controller/GenreController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/workspace/webg301-gch0901/webproject/templates/genre/index.html.twig'|file_link(0) }}">templates/genre/index.html.twig</a></code></li>
-    </ul>
+<div class="container-fluid col-md-8 text-center">
+    <h2 class="text text-primary mb-2">Genre List</h2>
+    <a class="btn btn-primary mb-3" href="">ADD</a>
+    <table class="table table-info">
+        <tr>
+            <th>Genre Id</th>
+            <th>Genre name</th>
+            <th>Genre image</th>
+            <th>Menu</th>
+        </tr>
+        {% for genre in genres %}
+            <tr>
+                <td>{{ genre.id }}</td>
+                <td>{{ genre.name }}</td>
+                <td>
+                    <a href="{{ path('genre_detail' , {'id' : genre.id })}}">
+                        <img src="{{ genre.image }}" width=100 height=100>
+                    </a>     
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="">EDIT</a>
+                    <a class="btn btn-danger" href="">DELETE</a>
+                </td>
+            </tr>
+        {% endfor %}  
+    </table>
 </div>
 {% endblock %}
