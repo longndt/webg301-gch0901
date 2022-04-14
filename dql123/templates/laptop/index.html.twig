@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LaptopController!{% endblock %}
+{% block title %} Laptop List {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/workspace/webg301-gch0901/dql123/src/Controller/LaptopController.php'|file_link(0) }}">src/Controller/LaptopController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/workspace/webg301-gch0901/dql123/templates/laptop/index.html.twig'|file_link(0) }}">templates/laptop/index.html.twig</a></code></li>
-    </ul>
+<div class="container-fluid col-md-10 text-center">
+    <h1 class="text text-secondary mb-3"> Laptop List </h1>
+    <table class="table table-primary">
+        <tr>
+            <th>Laptop ID</th>
+            <th>Laptop Name</th>
+            <th>Laptop Brand</th>
+            <th>Laptop Price</th>
+            <th>Laptop Quantity</th>
+            <th>Laptop Manufacture Date</th>
+            <th>Laptop Image</th>
+        </tr>
+        {% for laptop in laptops %}
+        <tr>
+            <td>{{ laptop.id }}</td>
+            <td>{{ laptop.name }}</td>
+            <td>{{ laptop.brand }}</td>
+            <td>{{ laptop.price }} $</td>
+            <td>{{ laptop.quantity }}</td>
+            <td>{{ laptop.date | date('d/m/Y') }}</td>
+            <td>
+                <img src="{{ laptop.image }}" width=100 height=100>
+            </td>
+        </tr>
+        {% endfor %}    
+    </table>
 </div>
 {% endblock %}
