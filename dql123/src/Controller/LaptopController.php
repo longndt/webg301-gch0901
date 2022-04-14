@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Laptop;
+use App\Form\LaptopType;
 use App\Repository\LaptopRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/laptop')]
 class LaptopController extends AbstractController
@@ -25,5 +27,23 @@ class LaptopController extends AbstractController
         [
             'laptops' => $laptops
         ]);
+    }
+
+    #[Route('/add', name: 'laptop_add')]
+    public function laptopAdd (Request $request, ManagerRegistry $doctrine) {
+        $laptop = new Laptop;
+        $form = $this->createForm(LaptopType::class,$laptop);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $doctrine->getManager();
+            $manager->persist($laptop);
+            $manager->flush();
+            $this->addFlash("Success","Add laptop succeed !");
+            return $this->redirectToRoute("laptop_index");
+        }
+        return $this->renderForm("laptop/add.html.twig",
+                                [
+                                    'laptopForm' => $form
+                                ]);
     }
 }

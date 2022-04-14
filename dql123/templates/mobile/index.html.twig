@@ -1,18 +1,5 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<div class="container col-md-10 text-center">
-  <div class="row mt-4">
-    {% for flash in app.session.flashBag.get("Success") %}
-        <div class="alert alert-warning"> 
-            {{ flash }}
-        </div>
-    {% endfor %}
-    {% for flash in app.session.flashBag.get("Error") %}
-        <div class="alert alert-danger"> 
-            {{ flash }}
-        </div>
-    {% endfor %}
-  </div> 
 <h1 class="text text-danger"> Mobile List </h1>
     <form class="form form-group mt-3 mb-4" action="{{ path('mobile_search') }}" method="POST">
         <input type="search" name="keyword" placeholder="Search by name">

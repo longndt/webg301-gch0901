@@ -23,6 +23,21 @@
               <h3><a class="nav-link" href=" ">Add Laptop</a></h3>
             </nav>
         {% endblock %}
+        {% block message %}
+        <div class="container col-md-10 text-center">
+        <div class="row mt-4">
+            {% for flash in app.session.flashBag.get("Success") %}
+                <div class="alert alert-warning"> 
+                    {{ flash }}
+                </div>
+            {% endfor %}
+            {% for flash in app.session.flashBag.get("Error") %}
+                <div class="alert alert-danger"> 
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        </div> 
+        {% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>
