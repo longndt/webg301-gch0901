@@ -1,0 +1,10 @@
+{% form_theme bookForm 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-7 text-center">
+   <h2 class="text text-warning">Add new book</h2>
+   {{ form_start (bookForm) }}
+   {{ form_end (bookForm) }}
+</div>
+{% endblock %}
