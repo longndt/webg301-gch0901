@@ -2,17 +2,18 @@
 
 {% block body %}
 <div class="container col-md-8 text-center">
-   <h2 class="text-primary mb-3"> Book Detail </h2>
+   <h2 class="text-success mb-3"> {{ book.title }} </h2>
    <div class="row">
       <div class="col">
          <img src="{{ book.image }}" width=200 height=200>
       </div>
       <div class="col">
-         <h3>{{ book.title }}</h3>
          <h5 class="text-info">Author: {{ book.author }}</h5>
-         <h5 class="text-success">Genre: 
+         <h5 class="text-warning">Genre: 
             {% if book.genre != null %}
-                {{ book.genre.name }}
+               <a class="text text-success" href="{{ path('genre_detail' , {'id' : book.genre.id})}}">
+                  {{ book.genre.name }}
+               </a>             
             {% endif %}
         </h5>
          <h5 class="text-secondary">Price: {{ book.price }} $ </h5>

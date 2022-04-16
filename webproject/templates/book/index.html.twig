@@ -16,11 +16,13 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>{{ book.title }}</td>
-                <td>
+                <th>
                     {% if book.genre != null %}
-                        {{ book.genre.name }}
+                        <a class="text text-success text-decoration-none" href="{{ path('genre_detail', {'id' : book.genre.id })}}">
+                            {{ book.genre.name }}
+                        </a>   
                     {% endif %}
-                </td>
+                </th>
                 <td>
                     <a href="{{ path('book_detail', {'id' : book.id })}}  ">
                         <img src="{{ book.image }}" width=100 height=100>
