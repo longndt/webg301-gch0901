@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Genre;
+use App\Form\GenreType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -53,4 +55,39 @@ class GenreController extends AbstractController
        return $this->redirectToRoute("genre_index");
    }
 
+   #[Route('/add', name: 'genre_add')]
+   public function genreAdd(Request $request, ManagerRegistry $registry) {
+       $genre = new Genre;
+       $form = $this->createForm(GenreType::class,$genre);
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid()) {
+           $manager = $registry->getManager();
+           $manager->persist($genre);
+           $manager->flush();
+           $this->addFlash("Success","Add genre succeed !");
+           return $this->redirectToRoute('genre_index');
+       }
+       return $this->renderForm('genre/add.html.twig',
+                                [
+                                  'genreForm' => $form  
+                                ]);
+   }
+
+   #[Route('/edit/{id}', name: 'genre_edit')]
+   public function genreEdit(Request $request, ManagerRegistry $registry, $id) {
+       $genre = $registry->getRepository(Genre::class)->find($id);
+       $form = $this->createForm(GenreType::class, $genre);
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid()) {
+           $manager = $registry->getManager();
+           $manager->persist($genre);
+           $manager->flush();
+           $this->addFlash("Success", "Edit genre succeed !");
+           return $this->redirectToRoute('genre_index');
+       }
+       return $this->renderForm('genre/edit.html.twig',
+                                [
+                                    'genreForm' => $form
+                                ]);
+   }
 }

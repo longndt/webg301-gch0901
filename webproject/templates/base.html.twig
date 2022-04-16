@@ -15,6 +15,7 @@
         {% endblock %}
     </head>
     <body>
+        {# navigation bar #}
         {% block nav %}
         <ul class="nav justify-content-center|justify-content-end">
             <h1><li class="nav-tabs">
@@ -30,6 +31,17 @@
                 <a class="nav-link" href="">Logout</a>
             </li></h1>
         </ul>
+        {% endblock %}
+        {# show flash message #}
+        {% block flash %}
+        <div class="container-md col-md-6 text-center">
+            {% for message in app.session.flashBag.get('Success') %}
+               <p class="alert alert-success">{{ message }}</p> 
+            {% endfor %}
+            {% for message in app.session.flashBag.get('Error') %}
+               <p class="alert alert-danger">{{ message }}</p> 
+            {% endfor %}
+        </div>
         {% endblock %}
         {% block body %}{% endblock %}
     </body>
