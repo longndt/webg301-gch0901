@@ -33,4 +33,18 @@ class GenreController extends AbstractController
        ]);
    }
 
+   #[Route('/delete/{id}', name: 'genre_delete')]
+   public function genreDelete (ManagerRegistry $registry, $id) {
+       $genre = $registry->getRepository(Genre::class)->find($id);
+       if ($genre == null) {
+           $this->addFlash("Error", "Genre not found !");
+       } else {
+            $manager = $registry->getManager();
+            $manager->remove($genre);
+            $manager->flush();
+            $this->addFlash("Success", "Delete genre succeed !");
+       }
+       return $this->redirectToRoute("genre_index");
+   }
+
 }

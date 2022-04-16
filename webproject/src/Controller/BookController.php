@@ -32,4 +32,18 @@ class BookController extends AbstractController
             'book' => $book
         ]);
     }
+
+    #[Route('/delete/{id}', name: 'book_delete')]
+    public function bookDelete (ManagerRegistry $registry, $id) {
+        $book = $registry->getRepository(Book::class)->find($id);
+        if ($book == null) {
+            $this->addFlash("Error","Book not found !");
+        } else {
+            $manager = $registry->getManager();
+            $manager->remove($book);
+            $manager->flush();
+            $this->addFlash("Success", "Book delete succeed !");
+        }
+        return $this->redirectToRoute("book_index");
+    }
 }
