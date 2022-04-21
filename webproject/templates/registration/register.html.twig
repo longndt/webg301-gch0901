@@ -1,17 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block nav %}
+{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="container col-md-7 text-center">
+    <h1 class="h1 mb-3 mt-3 font-weight-normal text-danger">USER REGISTRATION</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    <div class="checkbox mb-3">
+        <label>
+         {{ form_row(registrationForm.agreeTerms) }}
+         </label>
+    </div>
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-lg btn-primary">Register</button>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}

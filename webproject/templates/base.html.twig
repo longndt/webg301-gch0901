@@ -28,7 +28,7 @@
                 <a class="nav-link" href="{{ path('genre_index')}}">Genre</a>
             </li></h1>
             <h1><li class="nav-tabs">
-                <a class="nav-link" href="{{ path('app_logout')}}">Logout</a>
+                <a class="nav-link" href="{{ path('app_logout')}}">Logout <i> ({{ app.user.username }}) </i> </a>
             </li></h1>
         </ul>
         {% endblock %}
