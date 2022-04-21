@@ -24,9 +24,11 @@
             <h1><li class="nav-tabs">
                 <a class="nav-link" href="{{ path('book_index')}}">Book</a>
             </li></h1>
+            {% if is_granted('ROLE_STAFF') %}
             <h1><li class="nav-tabs">
                 <a class="nav-link" href="{{ path('genre_index')}}">Genre</a>
             </li></h1>
+            {% endif %}
             <h1><li class="nav-tabs">
                 <a class="nav-link" href="{{ path('app_logout')}}">Logout <i> ({{ app.user.username }}) </i> </a>
             </li></h1>
@@ -34,7 +36,7 @@
         {% endblock %}
         {# show flash message #}
         {% block flash %}
-        <div class="container-md col-md-6 text-center">
+        <div class="container-md col-md-6 mt-3 text-center">
             {% for message in app.session.flashBag.get('Success') %}
                <p class="alert alert-success">{{ message }}</p> 
             {% endfor %}
