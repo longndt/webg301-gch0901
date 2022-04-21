@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Genre;
 use App\Form\BookType;
+use App\Repository\BookRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,28 +18,33 @@ class BookController extends AbstractController
     #[Route('/', name: 'book_index')]
     public function bookIndex (ManagerRegistry $registry) {
         $books = $registry->getRepository(Book::class)->findAll();
+        $genres = $registry->getRepository(Genre::class)->findAll();
         return $this->render("book/index.html.twig",
         [
-            'books' => $books
+            'books' => $books,
+            'genres' => $genres
         ]);
     }
  
     #[Route('/detail/{id}', name: 'book_detail')]
     public function bookDetail (ManagerRegistry $registry, $id) {
         $book = $registry->getRepository(Book::class)->find($id);
+        $genres = $registry->getRepository(Genre::class)->findAll();
         if ($book == null) {
             $this->addFlash("Error","Book not found !");
             return $this->redirectToRoute("book_index");
         }
         return $this->render("book/detail.html.twig",
         [
-            'book' => $book
+            'book' => $book,
+            'genres' => $genres
         ]);
     }
 
     #[Route('/delete/{id}', name: 'book_delete')]
     public function bookDelete (ManagerRegistry $registry, $id) {
         $book = $registry->getRepository(Book::class)->find($id);
+        $genres = $registry->getRepository(Genre::class)->findAll();
         if ($book == null) {
             $this->addFlash("Error","Book not found !");
         } else {
@@ -46,11 +53,15 @@ class BookController extends AbstractController
             $manager->flush();
             $this->addFlash("Success", "Book delete succeed !");
         }
-        return $this->redirectToRoute("book_index");
+        return $this->redirectToRoute("book_index",
+                        [
+                            'genres' => $genres
+                        ]);
     }
 
     #[Route('/add', name: 'book_add')]
    public function bookAdd(Request $request, ManagerRegistry $registry) {
+       $genres = $registry->getRepository(Genre::class)->findAll();
        $book = new Book;
        $form = $this->createForm(BookType::class,$book);
        $form->handleRequest($request);
@@ -63,12 +74,14 @@ class BookController extends AbstractController
        }
        return $this->renderForm('book/add.html.twig',
                                 [
-                                  'bookForm' => $form  
+                                  'bookForm' => $form,
+                                  'genres' => $genres
                                 ]);
    }
 
    #[Route('/edit/{id}', name: 'book_edit')]
    public function bookEdit(Request $request, ManagerRegistry $registry, $id) {
+      $genres = $registry->getRepository(Genre::class)->findAll();
        $book = $registry->getRepository(Book::class)->find($id);
        $form = $this->createForm(BookType::class, $book);
        $form->handleRequest($request);
@@ -81,7 +94,54 @@ class BookController extends AbstractController
        }
        return $this->renderForm('book/edit.html.twig',
                                 [
-                                    'bookForm' => $form
+                                    'bookForm' => $form,
+                                    'genres' => $genres
                                 ]);
+   }
+
+   #[Route('/asc', name: 'book_asc')]
+   public function sortAsc(BookRepository $bookRepository, ManagerRegistry $registry) {
+      $genres = $registry->getRepository(Genre::class)->findAll();
+       $books = $bookRepository->sortBookAsc();
+       return $this->render("book/index.html.twig",
+                            [
+                                'books' => $books,
+                                'genres' => $genres
+                            ]);
+   }
+
+   #[Route('/desc', name: 'book_desc')]
+   public function sortDesc(BookRepository $bookRepository, ManagerRegistry $registry) {
+      $genres = $registry->getRepository(Genre::class)->findAll();
+       $books = $bookRepository->sortBookDesc();
+       return $this->render("book/index.html.twig",
+                            [
+                                'books' => $books,
+                                'genres' => $genres
+                            ]);
+   }
+
+   #[Route('/search', name: 'book_search')]
+   public function search (Request $request, BookRepository $bookRepository, ManagerRegistry $registry) {
+       $genres = $registry->getRepository(Genre::class)->findAll();
+       $keyword = $request->get('title');
+       $books = $bookRepository->search($keyword);
+       return $this->render("book/index.html.twig",
+                            [
+                                'books' => $books,
+                                'genres' => $genres
+                            ]);
+   }
+
+   #[Route('/filter/{id}', name: 'book_filter')]
+   public function filter ($id, ManagerRegistry $registry) {
+       $genres = $registry->getRepository(Genre::class)->findAll();
+       $genre = $registry->getRepository(Genre::class)->find($id);
+       $books = $genre->getBooks();
+       return $this->render("book/index.html.twig",
+                            [
+                                    'books' => $books,
+                                    'genres' => $genres
+                            ]);
    }
 }

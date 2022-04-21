@@ -6,11 +6,37 @@
     {% if is_granted('ROLE_ADMIN') %}
        <a class="btn btn-primary mb-3" href="{{ path('book_add')}}">ADD</a>
     {% endif %}
-    <table class="table table-hover">
+    <form action="{{ path('book_search') }}" method="post">
+        <input type="search" name="title" id="">
+        <input type="submit" value="Search">
+    </form>
+    <h3 class="text text-danger mt-3">
+    {% set total = books|length %}
+    {% if total <= 1 %}
+        Total book :
+    {% else %}
+        Total books :
+    {% endif %}
+        {{ total }}
+    </h3>
+    <table class="table table-hover mt-3">
         <tr>
-            <th>Book Id</th>
+            <th>Book Id
+                <select onchange="window.location.href=this.value">
+                    <option>Sort</option>
+                    <option value="{{ path('book_asc')}}">Ascending</option>
+                    <option value="{{ path('book_desc')}}">Descending</option>
+                </select>       
+            </th>
             <th>Book Title</th>
-            <th>Book Genre</th>
+            <th>Book Genre
+                <select onchange="window.location.href=this.value">
+                    <option value="">Filter</option>
+                    {% for genre in genres %}
+                        <option value="{{ path('book_filter', {'id' : genre.id}) }}">{{ genre.name }}</option>
+                    {% endfor %}
+                </select>        
+            </th>
             <th>Book Cover</th>
             <th>Menu</th>
         </tr>

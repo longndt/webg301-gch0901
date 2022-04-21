@@ -36,7 +36,7 @@
         {% endblock %}
         {# show flash message #}
         {% block flash %}
-        <div class="container-md col-md-6 mt-3 text-center">
+        <div class="container-md col-md-5 mt-3 text-center">
             {% for message in app.session.flashBag.get('Success') %}
                <p class="alert alert-success">{{ message }}</p> 
             {% endfor %}
