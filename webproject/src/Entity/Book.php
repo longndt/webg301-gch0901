@@ -91,7 +91,13 @@ class Book
 
     public function setImage($image): self
     {
-        $this->image = $image;
+        /* nếu người dùng upload ảnh mới khi edit
+        thì set ảnh mới thay cho ảnh cũ trong DB
+        còn nếu người dùng không upload ảnh mới 
+        thì vẫn giữ nguyên ảnh cũ */
+        if ($image != null) {
+            $this->image = $image;
+        }
 
         return $this;
     }

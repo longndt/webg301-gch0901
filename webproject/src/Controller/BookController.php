@@ -113,6 +113,29 @@ class BookController extends AbstractController
        $form = $this->createForm(BookType::class, $book);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
+           /* 
+           kiểm tra xem người dùng có upload ảnh mới
+           cho book khi edit ảnh hay không
+           nếu có thì chạy code xử lý ảnh giống phần Add 
+           nếu không thì giữ nguyên ảnh cũ trong DB
+           */
+           $imageFile = $form['image']->getData();
+           if ($imageFile != null) {
+               $image = $book->getImage();
+               $imgName = uniqid();
+               $imgExtension = $image->guessExtension();
+               $imageName = $imgName . '.' . $imgExtension;
+               try {
+                   $image->move(
+                       $this->getParameter('book_image'),
+                       $imageName
+                   );
+               } catch (FileException $e) {
+                   throwException($e);
+               }
+               $book->setImage($imageName);
+           }
+
            $manager = $registry->getManager();
            $manager->persist($book);
            $manager->flush();
