@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -47,10 +48,14 @@ class BookType extends AbstractType
                 'required' => true,
                 'widget' => 'single_text'
             ])
-            ->add('image', TextType::class,
+            ->add('image', FileType::class,
             [
                 'label' => 'Book Cover',
-                'required' => true
+                'data_class' => null,
+                'required' => is_null ($builder->getData()->getImage())
+                /* Book đã có image => getImage() =! null => required = false
+                   Book chưa có image => getImage() == null => required = true
+                */
             ])
             ->add('genre', EntityType::class,
             [
